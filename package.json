@@ -1,5 +1,5 @@
 {
-  "name": "oreos",
+  "name": "Oreos",
   "version": "0.0.0",
   "description": "describe wat this is",
   "main": "index.js",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hkewnarny/oreos",
   "dependencies": {
-    "express": "^4.11.1"
+    "express": "^4.11.1",
+    "ejs": "~1.0.0"
   }
 }

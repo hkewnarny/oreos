@@ -1,9 +1,11 @@
-var express = require('express')
-var app = express()
+var express=require('express');
+var app=express();
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', function(req, res) {
-  res.send('hello world')
-})
+require('./router/main')(app);
+app.set('views',__dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
-app.listen(3000);
+var server=app.listen(3001,function(){
+	console.log("Express is running on port 3000");
+});
