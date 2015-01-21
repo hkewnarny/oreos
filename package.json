@@ -1,0 +1,22 @@
+{
+  "name": "oreos",
+  "version": "0.0.0",
+  "description": "describe wat this is",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hkewnarny/oreos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hkewnarny/oreos/issues"
+  },
+  "homepage": "https://github.com/hkewnarny/oreos",
+  "dependencies": {
+    "express": "^4.11.1"
+  }
+}
