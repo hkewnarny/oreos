@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/hkewnarny/oreos",
   "dependencies": {
+    "ejs": "~1.0.0",
     "express": "^4.11.1",
-    "ejs": "~1.0.0"
+    "nedb": "^1.1.1"
   }
 }
