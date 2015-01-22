@@ -15,32 +15,34 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
       $scope.model = {};
       $scope.model.search = '';
       
-      $scope.model.playList = [{
-        artist: 'Taylor Swift',
-        title: 'Shake It Off',
-        description: 'Awesome song',
-        url: 'http://www.youtube.com'
-      }, {
-        artist: 'Ed Sheeran',
-        title: 'Thinking Out Loud',
-        description: 'Awesome song',
-        url: 'http://www.youtube.com'
-      }, {
-        artist: 'Justin Timberlake',
-        title: 'Not A Bad Thing',
-        description: 'Awesome song',
-        url: 'http://www.youtube.com'
-      }, {
-        artist: 'Ne-Yo',
-        title: 'When You\'re Mad',
-        description: 'Awesome song',
-        url: 'http://www.youtube.com'
-      }, {
-        artist: 'Bruno Mars',
-        title: 'Uptown Funk',
-        description: 'Awesome song',
-        url: 'http://www.youtube.com'
-      }];
+      $scope.model.playList = [];
+
+//        [{
+//        artist: 'Taylor Swift',
+//        title: 'Shake It Off',
+//        description: 'Awesome song',
+//        url: 'http://www.youtube.com'
+//      }, {
+//        artist: 'Ed Sheeran',
+//        title: 'Thinking Out Loud',
+//        description: 'Awesome song',
+//        url: 'http://www.youtube.com'
+//      }, {
+//        artist: 'Justin Timberlake',
+//        title: 'Not A Bad Thing',
+//        description: 'Awesome song',
+//        url: 'http://www.youtube.com'
+//      }, {
+//        artist: 'Ne-Yo',
+//        title: 'When You\'re Mad',
+//        description: 'Awesome song',
+//        url: 'http://www.youtube.com'
+//      }, {
+//        artist: 'Bruno Mars',
+//        title: 'Uptown Funk',
+//        description: 'Awesome song',
+//        url: 'http://www.youtube.com'
+//      }];
 
       var socket = io();
 
@@ -62,6 +64,13 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
               console.log($scope.model.youtube.stream);
         });
       });
+
+        PlaylistService.findAll().then(function(videos){
+            $scope.model.playList = videos;
+        }, function(error) {
+            console.log('error');
+            console.log(error);
+        });
 
       $scope.sendAudioCommand = function(func, args) {
         $('#youtube-player')[0].contentWindow.postMessage(JSON.stringify({
@@ -93,7 +102,10 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
           console.log(successResponse.video);
 
           PlaylistService.findAll().then(function(videos){
-            console.log(videos);
+              $scope.model.playList = videos;
+
+              console.log('$scope.model.playList');
+              console.log($scope.model.playList);
           }, function(error) {
             console.log('error');
             console.log(error);

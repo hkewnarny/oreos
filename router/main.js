@@ -10,14 +10,26 @@ module.exports=function(app)
 	});
 
 	app.get('/songs', function(req, res) {
-	    songs_db.find({}, function(err, songs) {
-        if(err) {
-          console.log("findAll Error:");
-          console.log(err);
-        } else {
-          res.send(songs);
-        }
-	    });
+
+
+        songs_db.find({}).sort({ createdAt: 1 }).exec(function (err, songs) {
+            if(err) {
+                console.log("findAll Error:");
+                console.log(err);
+            } else {
+                res.send(songs);
+            }
+        });
+
+
+//	    songs_db.find({}, { createdAt: 1 }, function(err, songs) {
+//        if(err) {
+//          console.log("findAll Error:");
+//          console.log(err);
+//        } else {
+//          res.send(songs);
+//        }
+//	    });
   	});
 
   app.post('/songs', function(req, res) {

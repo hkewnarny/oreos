@@ -20,14 +20,17 @@
             </div>
         </div>
 
-        <div class="row playlist_container_v2 col-md-4">
+        <div class="row playlist_container_db col-md-4">
             <div class="row entry" data-ng-repeat="songEntry in model.playList">
                 <div>
+                    <span>{{songEntry.uploader}}</span>
+                    -
                     <span>{{songEntry.title}}</span>
                     -
-                    <span>{{songEntry.url}}</span>
-                    -
                     <span>{{songEntry.videoId}}</span>
+                    <!----->
+                    <!--<span>{{songEntry.createdAt}}</span>-->
+                    <br><br>
                 </div>
             </div>
         </div>
