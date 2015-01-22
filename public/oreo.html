@@ -29,8 +29,10 @@
                     -
                     <span>{{songEntry.videoId}}</span>
 
-                    <a class="btn btn-primary" role="button" ng-click="selectSong(songEntry.videoId)">Play</a>
-                    <a class="btn btn-primary" role="button" ng-click="deleteSong(songEntry._id)">Delete</a>
+                    <div>
+                        <a class="btn btn-primary" role="button" ng-click="selectSong(songEntry.videoId)">Play</a>
+                        <a class="btn btn-primary" role="button" ng-click="deleteSong(songEntry._id)">Delete</a>
+                    </div>
                     <!----->
                     <!--<span>{{songEntry.createdAt}}</span>-->
                     <br><br>
