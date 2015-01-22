@@ -4,7 +4,7 @@
            <!--typeahead="entry.title for entry in model.playList | filter:model.search">-->
 
     <div class="row">
-        <div class="playlist_container col-md-8">
+        <div class="playlist_container col-md-6">
             <div class="entry" data-ng-repeat="entry in model.youtube.stream.items" data-ng-if="entry.id.kind == 'youtube#video'">
                 <div>
                     <div class="thumbnail right-caption span4">
@@ -21,8 +21,9 @@
         </div>
 
         <div class="row playlist_container_db col-md-4">
-            <div class="row entry" data-ng-repeat="songEntry in model.playList">
-                <div>
+            <div class="row entry" data-ng-repeat="songEntry in model.playList | filter: model.playlistFiler">
+                <div data-ng-click="selectSong(songEntry.videoId)"
+                     data-ng-class="{selected_song: songEntry.videoId == videoId}">
                     <span>{{songEntry.uploader}}</span>
                     -
                     <span>{{songEntry.title}}</span>
@@ -30,6 +31,18 @@
                     <span>{{songEntry.videoId}}</span>
                     <!----->
                     <!--<span>{{songEntry.createdAt}}</span>-->
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="row select_playlist_container col-md-4">
+            <div class="row playlist_entry" data-ng-repeat="playlist in model.availablePlaylist">
+                <div>
+                    <span ng-click="selectPlaylist(playlist.playlistName)"
+                          ng-class="{selected_playlist: model.selectedPlaylist == playlist.playlistName}">
+                        {{playlist.playlistName}}
+                    </span>
                     <br><br>
                 </div>
             </div>

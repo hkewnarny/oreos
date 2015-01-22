@@ -3,7 +3,7 @@ var app = angular.module('oreosApp', ['ui.bootstrap']);
 app.controller('MainCtrl', function($scope) {
 });
 
-app.directive('oreoDirective', function($compile, $sce, YouTubeService, PlaylistService) {
+app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService, PlaylistService) {
   return {
     restrict: 'A', //attribute or element
     scope: {
@@ -16,33 +16,32 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
       $scope.model.search = '';
       
       $scope.model.playList = [];
+      $scope.model.playlistFiler = {
+          playlist: 'playlistTitle1'
+      };
 
-//        [{
-//        artist: 'Taylor Swift',
-//        title: 'Shake It Off',
-//        description: 'Awesome song',
-//        url: 'http://www.youtube.com'
-//      }, {
-//        artist: 'Ed Sheeran',
-//        title: 'Thinking Out Loud',
-//        description: 'Awesome song',
-//        url: 'http://www.youtube.com'
-//      }, {
-//        artist: 'Justin Timberlake',
-//        title: 'Not A Bad Thing',
-//        description: 'Awesome song',
-//        url: 'http://www.youtube.com'
-//      }, {
-//        artist: 'Ne-Yo',
-//        title: 'When You\'re Mad',
-//        description: 'Awesome song',
-//        url: 'http://www.youtube.com'
-//      }, {
-//        artist: 'Bruno Mars',
-//        title: 'Uptown Funk',
-//        description: 'Awesome song',
-//        url: 'http://www.youtube.com'
-//      }];
+      $scope.model.availablePlaylist = [{
+          playlistName: 'playlistTitle1'
+      }, {
+          playlistName: 'playListTitle2'
+      }, {
+          playlistName: 'playlistTitle3'
+      }];
+
+
+      $scope.selectPlaylist = function(playlist) {
+          $scope.model.selectedPlaylist = playlist;
+          $scope.model.playlistFiler = {
+              playlist: playlist
+          };
+
+          var songs = $filter('filter')($scope.model.playList, $scope.model.playlistFiler);
+          if (songs[0]) {
+              $scope.selectSong(songs[0].videoId);
+          }
+      };
+
+//        $scope.selectPlaylist($scope.model.availablePlaylist[0].playlistName);
 
       var socket = io();
 
@@ -67,6 +66,7 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
 
         PlaylistService.findAll().then(function(videos){
             $scope.model.playList = videos;
+            $scope.selectPlaylist($scope.model.availablePlaylist[0].playlistName);
         }, function(error) {
             console.log('error');
             console.log(error);
@@ -90,11 +90,16 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
 
       };
 
+        $scope.selectSong = function(videoId) {
+            $scope.videoId = videoId;
+        };
+
       $scope.addToPlaylist = function(uploader, videoTitle, videoId) {
         var data = {
           title: videoTitle,
           uploader: uploader,
-          videoId: videoId
+          videoId: videoId,
+          playlist: $scope.model.selectedPlaylist
         }
 
         PlaylistService.add(data).then(function(successResponse) {
