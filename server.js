@@ -1,9 +1,11 @@
-var express=require('express'),
+var express = require('express'),
     bodyParser = require('body-parser'),
     multer = require('multer');
 
-var app=express();
-
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = 3001;
 
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
@@ -15,6 +17,24 @@ app.engine('html', require('ejs').renderFile);
 
 require('./router/main')(app);
 
-var server=app.listen(3001,function(){
-	console.log("Express is running on port 3001");
+server.listen(port, function(){
+	console.log("Express is running on port %d", port);
+});
+
+io.on('connection', function (socket) {
+	socket.on('pauseSong', function (data) {
+	    // Tell the client to execute 'pauseSong'
+	    io.emit('pauseSong', {
+	      username: socket.username,
+	      message: data
+    	});
+  	});
+
+  	socket.on('playSong', function (data) {
+	    // Tell the client to execute 'playSong'
+	    io.emit('playSong', {
+	      username: socket.username,
+	      message: data
+    	});
+  	});
 });

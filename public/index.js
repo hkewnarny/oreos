@@ -1,4 +1,4 @@
-var app = angular.module('oerosApp', ['ui.bootstrap']);
+var app = angular.module('oreosApp', ['ui.bootstrap']);
 
 app.controller('MainCtrl', function($scope) {
 });
@@ -42,26 +42,11 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
         url: 'http://www.youtube.com'
       }];
 
+      var socket = io();
+
       $scope.model.youtube = {
           stream: {}
       };
-
-      console.log("testing dbservice");
-
-      var sampleData = {
-        title: "ben1231asf",
-        uploader: "yout123",
-        videoId: "123341asdf"
-      }
-
-      PlaylistService.add(sampleData).then(function() {
-        PlaylistService.findAll().then(function(songs){
-          console.log(songs);
-        }, function(error) {
-          console.log('error');
-          console.log(error);
-        })
-      });
 
       $scope.videoUrl = '';
 
@@ -84,12 +69,57 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
            'func': func,
           'args': args || []
         }), "*");
+
+        switch(func) {
+          case 'playVideo':
+            socket.emit('playSong', "foo");
+            break;
+          case 'pauseVideo':
+            socket.emit('pauseSong', "foo");
+            break;
+        }
+
       };
 
-      $scope.playFromPlaylist = function(videoId) {
-        console.log('playing video');
-        $scope.videoId = videoId;
+      $scope.addToPlaylist = function(uploader, videoTitle, videoId) {
+        var data = {
+          title: videoTitle,
+          uploader: uploader,
+          videoId: videoId
+        }
+
+        PlaylistService.add(data).then(function(successResponse) {
+
+          console.log(successResponse.video);
+
+          PlaylistService.findAll().then(function(videos){
+            console.log(videos);
+          }, function(error) {
+            console.log('error');
+            console.log(error);
+          });
+
+        }, function(error) {
+          console.log('error on add');
+        });
       };
+
+      var doAudioCommand = function(func) {
+        $('#youtube-player')[0].contentWindow.postMessage(JSON.stringify({
+          'event': 'command',
+           'func': func,
+           'args': []
+        }), "*");
+      };
+
+      // Client socket listeners
+      socket.on('pauseSong', function(data) {
+        doAudioCommand('pauseVideo');
+      });
+
+      socket.on('playSong', function(data) {
+        doAudioCommand('playVideo');
+      });
 
     },
     controller: function($scope, $element, $attrs) {

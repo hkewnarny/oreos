@@ -11,9 +11,9 @@
                         <img ng-src="{{entry.snippet.thumbnails.medium.url}}" alt="">
                         <div class="caption">
                             <h5>{{entry.snippet.channelTitle}}</h5>
+                            <p>{{entry.snippet.title}}</p>
                             <p>{{entry.snippet.description}}</p>
-                            <p>{{entry.id.videoId}}</p>
-                            <p><a class="btn btn-primary" role="button" ng-click="playFromPlaylist(entry.id.videoId)">Add to Playlist</a></p>
+                            <p><a class="btn btn-primary" role="button" ng-click="addToPlaylist(entry.snippet.channelTitle, entry.snippet.title, entry.id.videoId)">Add to Playlist</a></p>
                         </div>
                     </div>
                 </div>
