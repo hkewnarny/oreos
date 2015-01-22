@@ -39,6 +39,12 @@ io.on('connection', function (socket) {
 	    io.emit('selectSong', data);
   	});
 
+  	socket.on('startSong', function (data) {
+	    // Tell the client to execute 'startSong'
+	    io.emit('startSong', data);
+  	});
+
+
   	socket.on('updatePlaylist', function (data) {
 	    // Tell the client to execute 'updatePlaylist'
 	    io.emit('updatePlaylist');

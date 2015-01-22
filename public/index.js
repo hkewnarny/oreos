@@ -125,6 +125,9 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
           case 'pauseVideo':
             socket.emit('pauseSong', $scope.model.selectedPlaylist);
             break;
+          case 'seekTo':
+            socket.emit('startSong', $scope.model.selectedPlaylist);
+            break;
         }
 
       };
@@ -189,11 +192,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
         socket.emit("updatePlaylist");
       };
 
-      var doAudioCommand = function(func) {
+      var doAudioCommand = function(func, args) {
         $('#youtube-player')[0].contentWindow.postMessage(JSON.stringify({
           'event': 'command',
            'func': func,
-           'args': []
+           'args': args || []
         }), "*");
       };
 
@@ -207,6 +210,12 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
       socket.on('playSong', function(data) {
         if (data == $scope.model.selectedPlaylist) {
           doAudioCommand('playVideo');
+        }
+      });
+
+      socket.on('startSong', function(data) {
+        if (data == $scope.model.selectedPlaylist) {
+          doAudioCommand('seekTo', 0);
         }
       });
 
