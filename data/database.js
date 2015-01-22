@@ -1,6 +1,13 @@
 var Datastore = require('nedb');
 
+var playLists = new Datastore({ filename: '../data/playLists', autoload: true }),
+	videos = new Datastore({ filename:  '../data/videos', autoload: true });
+
+
+videos.ensureIndex({fieldName: 'playListId', unique: true});
+videos.ensureIndex({fieldName: 'videoId', unique: true});
+
 module.exports = {
-  playlist: new Datastore({ filename: 'playlists', autoload: true }),
-  song:    new Datastore({ filename: 'songs', autoload: true })
-}
+    playLists: playLists,
+    videos: videos
+};

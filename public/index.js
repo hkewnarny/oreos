@@ -3,13 +3,12 @@ var app = angular.module('oerosApp', ['ui.bootstrap']);
 app.controller('MainCtrl', function($scope) {
 });
 
-app.directive('oreoDirective', function($compile, $sce, YouTubeService) {
+app.directive('oreoDirective', function($compile, $sce, YouTubeService, PlaylistService) {
   return {
     restrict: 'A', //attribute or element
     scope: {
     },
     templateUrl: 'oreo.html',
-    // template: '',
     replace: true,
     // require: 'ngModel',
     link: function($scope, elem, attr, ctrl) {
@@ -47,6 +46,23 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService) {
           stream: {}
       };
 
+      console.log("testing dbservice");
+      var sampleData = {
+        title: "Taylor",
+        url: "http://www.youtube.com",
+        videoId: "123"
+      }
+
+      PlaylistService.add(sampleData).then(function() {
+        PlaylistService.findAll().then(function(videos){
+          console.log(videos);
+        }, function(error) {
+          console.log('error');
+          console.log(error);
+        })
+      });
+
+
       $scope.videoUrl = '';
 
       $scope.videoId = 'e-ORhEE9VVg';
@@ -81,7 +97,6 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService) {
   };
 });
 
-
 app.service('YouTubeService', function($q) {
     return {
         search: function(searchTerm) {
@@ -105,4 +120,29 @@ app.service('YouTubeService', function($q) {
         pauseVideo: function() {},
         skipVideo: function() {}
     };
+});
+
+app.service('PlaylistService', function($q, $http) {
+  return {
+    add: function(video) {
+      var defer = $q.defer();
+      $http.post("/videos", video).
+        success(function(id) {
+          defer.resolve(id);
+        }).error(function(id) {
+          console.log("error" + id);
+        });
+      return defer.promise;
+    },
+    findAll: function() {
+      var defer = $q.defer();
+      $http.get("/videos").
+        success(function(data){
+          defer.resolve(data);
+        }).error(function(data){
+          console.log("error " + data);
+        });
+      return defer.promise;
+    }
+  };
 });
