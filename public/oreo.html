@@ -1,0 +1,74 @@
+<div class="container text-center">
+    <input type="text" data-ng-model="model.search"
+           class="form-control row" placeholder="Text input"
+           typeahead="entry.title for entry in model.playList | filter:model.search">
+    
+      <!-- <div>{{model.search}}</div> -->
+        
+      <!-- <div data-ng-repeat="entry in model.playList">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail row">
+              <img src="http://placehold.it/300x150" alt="...">
+              <div class="caption">
+                <h3>{{entry.artist}} - {{entry.title}}</h3>
+                <p>{{entry.description}}</p>
+                <p>{{entry.url}}</p>
+                <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    {{model.search}}  
+    <div class="playlist_container">
+    
+      <div class="row entry" data-ng-repeat="entry in model.playList">
+        <div>
+          <div class="thumbnail right-caption span4">
+            <img src="http://placehold.it/120x160" alt="">
+            <div class="caption">
+              <h5>{{entry.artist}} - {{entry.title}}</h5>
+              <p>Cras justo odio, dapibus ac facilisis in, egestas eget. Eget metus</p>
+              <p>{{entry.url}}</p>
+              <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+      
+      
+      <!-- <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail row">
+            <img class="thumbnail_image" src="http://placehold.it/300x150" alt="...">
+            <div class="thumbnail_caption caption">
+              <h3>Artist - Title</h3>
+              <p>Description</p>
+              <p>www.youtube.com</p>
+              <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      
+      <!-- <div class="thumbnail right-caption span4">
+        <img src="http://placehold.it/120x160" alt="">
+        <div class="caption">
+          <h5>Thumbnail label</h5>
+          <p>Cras justo odio, dapibus ac facilisis in, egestas eget. Eget metus</p>
+          <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
+        </div>
+      </div> -->
+    
+    
+    <div class="form-control">
+      <p>
+        <a href="#" class="btn btn-primary" role="button">Start</a>
+        <a href="#" class="btn btn-default" role="button">Pause</a>
+        <a href="#" class="btn btn-primary" role="button">Skip</a>
+      </p>
+    </div>
+</div>

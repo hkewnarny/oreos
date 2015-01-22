@@ -1,18 +1,25 @@
-<html>
-	<head>
-		<script src="https://github.com/typicaljoe/taffydb/raw/master/taffy.js"></script>
-		<script>
+<!doctype html>
+<HTML>
+<HEAD>
+<TITLE>Your Title Here</TITLE>
+<link data-require="bootstrap-css@3.1.*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+<script data-require="angular.js@*" data-semver="1.4.0-beta.1" src="https://code.angularjs.org/1.4.0-beta.1/angular.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.12.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
 
-		var cities = TAFFY([{name:"New York",state:"WA"},{name:"Las Vegas",state:"NV"},{name:"Boston",state:"MA"}]);
-	
-		cities.insert({name:"Portland",state:"OR"});
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+<HR>
+<div data-ng-app="oerosApp">
+      <div data-oreo-directive></div>
+</div>
 
-		alert(cities({name:"Boston"}).count());
+<div id="search-container">
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
-		</script>
-	</head>
-	<body>
-		hello world
-	</body>
-				
-</html>
+<script src="index.js"></script>
+<script src="auth.js"></script>
+<script src="search.js"></script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+</BODY>
+</HTML>
