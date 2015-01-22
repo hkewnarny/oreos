@@ -10,27 +10,15 @@ module.exports=function(app)
 	});
 
 	app.get('/songs', function(req, res) {
-
-
-        songs_db.find({}).sort({ createdAt: 1 }).exec(function (err, songs) {
-            if(err) {
-                console.log("findAll Error:");
-                console.log(err);
-            } else {
-                res.send(songs);
-            }
-        });
-
-
-//	    songs_db.find({}, { createdAt: 1 }, function(err, songs) {
-//        if(err) {
-//          console.log("findAll Error:");
-//          console.log(err);
-//        } else {
-//          res.send(songs);
-//        }
-//	    });
-  	});
+    songs_db.find({}).sort({ createdAt: 1 }).exec(function (err, songs) {
+        if(err) {
+          console.log("findAll Error:");
+          console.log(err);
+        } else {
+          res.send(songs);
+        }
+    });
+  });
 
   app.post('/songs', function(req, res) {
     //console.log(req.body);
@@ -43,6 +31,19 @@ module.exports=function(app)
       } else {
         res.send(new_song)
         console.log(songs_db.find({}));
+      }
+    });
+  });
+
+  app.post('/remove', function(req, res) {
+    songs_db.remove({ _id: req.body.id }, {}, function (err, numRemoved)  {
+      if(err) {
+        console.log("remove error: ");
+        console.log(err);
+      } else {
+        console.log("songs removed: ");
+        console.log(numRemoved);
+        res.send({numRemoved: numRemoved});
       }
     });
   });

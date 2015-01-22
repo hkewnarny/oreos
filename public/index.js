@@ -95,8 +95,23 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
         };
 
         $scope.deleteSong = function(id) {
-            console.log('delete');
-            console.log(id);
+          PlaylistService.remove({id:id}).then(function(successResponse) {
+            console.log("deleted: ")
+            console.log(successResponse);
+
+            PlaylistService.findAll().then(function(videos){
+                $scope.model.playList = videos;
+
+                console.log('$scope.model.playList');
+                console.log($scope.model.playList);
+            }, function(error) {
+              console.log('error');
+              console.log(error);
+            });
+
+          }, function(error) {
+            console.log('error on remove');
+          });
         };
 
       $scope.addToPlaylist = function(uploader, videoTitle, videoId) {
@@ -182,7 +197,21 @@ app.service('PlaylistService', function($q, $http) {
         success(function(data) {
           defer.resolve(data);
         }).error(function(err) {
-          console.log("error" + err);
+          console.log("error:");
+          console.log(err);
+        });
+      return defer.promise;
+    },
+    remove: function(id) {
+      var defer = $q.defer();
+      $http.post("/remove", id).
+        success(function(data) {
+          console.log("removed success: ");
+          console.log(data);
+          defer.resolve(data);
+        }).error(function(err) {
+          console.log("error:");
+          console.log(err);
         });
       return defer.promise;
     },
