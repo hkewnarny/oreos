@@ -20,7 +20,7 @@ module.exports=function(app)
       createdAt = new Date().getTime();
       videos_db.insert({
       	title: req.body.title,
-      	url: req.body.url,
+      	uploader: req.body.author,
       	videoId: req.body.videoId,
       	creationDate: createdAt
       }, function(err, new_video) {

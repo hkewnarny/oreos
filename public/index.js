@@ -47,9 +47,10 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
       };
 
       console.log("testing dbservice");
+
       var sampleData = {
         title: "Taylor",
-        url: "http://www.youtube.com",
+        uploader: "vevo",
         videoId: "123"
       }
 
