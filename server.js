@@ -40,8 +40,13 @@ io.on('connection', function (socket) {
   	});
 
   	socket.on('updatePlaylist', function (data) {
-	    // Tell the client to execute 'selectSong'
+	    // Tell the client to execute 'updatePlaylist'
 	    io.emit('updatePlaylist');
+  	});
+
+  	socket.on('updateListOfPlaylists', function (data) {
+	    // Tell the client to execute 'updateListOfPlaylists'
+	    io.emit('updateListOfPlaylists');
   	});
 
   	socket.on('userJoin', function(data) {

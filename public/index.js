@@ -52,7 +52,7 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
                 });
             });
 
-
+            socket.emit("updateListOfPlaylists");
             //addToPlaylist
         };
 //        $scope.deletePlaylist = function(id) {
@@ -225,6 +225,12 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
             console.log('error');
             console.log(error);
           });     
+      });
+
+      socket.on('updateListOfPlaylists', function(data) {
+        PlaylistService.findAllPlayLists().then(function(playlists) {
+                    $scope.model.availablePlaylist = playlists;
+                });
       });
 
       socket.on('connect', function() {
