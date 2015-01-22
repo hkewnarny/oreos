@@ -49,20 +49,19 @@ app.directive('oreoDirective', function($compile, $sce, YouTubeService, Playlist
       console.log("testing dbservice");
 
       var sampleData = {
-        title: "Taylor",
-        uploader: "vevo",
-        videoId: "123"
+        title: "ben1231asf",
+        uploader: "yout123",
+        videoId: "123341asdf"
       }
 
       PlaylistService.add(sampleData).then(function() {
-        PlaylistService.findAll().then(function(videos){
-          console.log(videos);
+        PlaylistService.findAll().then(function(songs){
+          console.log(songs);
         }, function(error) {
           console.log('error');
           console.log(error);
         })
       });
-
 
       $scope.videoUrl = '';
 
@@ -125,19 +124,19 @@ app.service('YouTubeService', function($q) {
 
 app.service('PlaylistService', function($q, $http) {
   return {
-    add: function(video) {
+    add: function(song) {
       var defer = $q.defer();
-      $http.post("/videos", video).
-        success(function(id) {
-          defer.resolve(id);
-        }).error(function(id) {
-          console.log("error" + id);
+      $http.post("/songs", song).
+        success(function(data) {
+          defer.resolve(data);
+        }).error(function(err) {
+          console.log("error" + err);
         });
       return defer.promise;
     },
     findAll: function() {
       var defer = $q.defer();
-      $http.get("/videos").
+      $http.get("/songs").
         success(function(data){
           defer.resolve(data);
         }).error(function(data){

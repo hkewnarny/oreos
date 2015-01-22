@@ -1,0 +1,3 @@
+{"title":"Ben","videoId":"123","creationDate":1421904149176,"_id":"TrU4UOcUD5iQUfmY"}
+{"$$indexCreated":{"fieldName":"playListId","unique":true,"sparse":false}}
+{"$$indexCreated":{"fieldName":"videoId","unique":true,"sparse":false}}
