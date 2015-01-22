@@ -117,6 +117,8 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
           }, function(error) {
             console.log('error on remove');
           });
+
+          socket.emit("updatePlaylist");
         };
 
       $scope.addToPlaylist = function(uploader, videoTitle, videoId) {
@@ -144,6 +146,8 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
         }, function(error) {
           console.log('error on add');
         });
+
+        socket.emit('updatePlaylist');
       };
 
       var doAudioCommand = function(func) {
@@ -169,6 +173,15 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
             $scope.videoId = data['videoId'];
           }
         });
+      });
+
+      socket.on('updatePlaylist', function(data) {
+        PlaylistService.findAll().then(function(videos){
+          $scope.model.playList = videos;
+          }, function(error) {
+            console.log('error');
+            console.log(error);
+          });
       });
 
       socket.on('connect', function() {

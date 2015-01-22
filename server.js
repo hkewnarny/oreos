@@ -45,6 +45,11 @@ io.on('connection', function (socket) {
 	    io.emit('selectSong', data);
   	});
 
+  	socket.on('updatePlaylist', function (data) {
+	    // Tell the client to execute 'selectSong'
+	    io.emit('updatePlaylist');
+  	});
+
   	socket.on('userJoin', function(data) {
   		console.log(socket.id + " JOINED!");
   		users[socket.id] = 1;
