@@ -100,11 +100,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
         };
 
         $scope.deleteSong = function(id) {
-          PlaylistService.remove({id:id}).then(function(successResponse) {
+          PlaylistService.removeSong({id:id}).then(function(successResponse) {
             console.log("deleted: ")
             console.log(successResponse);
 
-            PlaylistService.findAll().then(function(videos){
+            PlaylistService.findAllSongs().then(function(videos){
                 $scope.model.playList = videos;
 
                 console.log('$scope.model.playList');
@@ -127,11 +127,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
           playlist: $scope.model.selectedPlaylist
         }
 
-        PlaylistService.add(data).then(function(successResponse) {
+        PlaylistService.addSong(data).then(function(successResponse) {
 
           console.log(successResponse.video);
 
-          PlaylistService.findAll().then(function(videos){
+          PlaylistService.findAllSongs().then(function(videos){
               $scope.model.playList = videos;
 
               console.log('$scope.model.playList');
@@ -218,7 +218,7 @@ app.service('YouTubeService', function($q) {
 
 app.service('PlaylistService', function($q, $http) {
   return {
-    add: function(song) {
+    addSong: function(song) {
       var defer = $q.defer();
       $http.post("/songs", song).
         success(function(data) {
@@ -229,9 +229,9 @@ app.service('PlaylistService', function($q, $http) {
         });
       return defer.promise;
     },
-    remove: function(id) {
+    removeSong: function(id) {
       var defer = $q.defer();
-      $http.post("/remove", id).
+      $http.post("/removeSong", id).
         success(function(data) {
           console.log("removed success: ");
           console.log(data);
@@ -242,9 +242,43 @@ app.service('PlaylistService', function($q, $http) {
         });
       return defer.promise;
     },
-    findAll: function() {
+    findAllSongs: function() {
       var defer = $q.defer();
       $http.get("/songs").
+        success(function(data){
+          defer.resolve(data);
+        }).error(function(data){
+          console.log("error " + data);
+        });
+      return defer.promise;
+    },
+    addPlaylist: function(song) {
+      var defer = $q.defer();
+      $http.post("/playlists", playlist).
+        success(function(data) {
+          defer.resolve(data);
+        }).error(function(err) {
+          console.log("error:");
+          console.log(err);
+        });
+      return defer.promise;
+    },
+    removePLayList: function(id) {
+      var defer = $q.defer();
+      $http.post("/removePlaylist", id).
+        success(function(data) {
+          console.log("removed success: ");
+          console.log(data);
+          defer.resolve(data);
+        }).error(function(err) {
+          console.log("error:");
+          console.log(err);
+        });
+      return defer.promise;
+    },
+    findAllPlayLists: function() {
+      var defer = $q.defer();
+      $http.get("/playlists").
         success(function(data){
           defer.resolve(data);
         }).error(function(data){
