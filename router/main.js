@@ -70,7 +70,7 @@ module.exports=function(app)
     });
   });
 
-  app.post('/remove', function(req, res) {
+  app.post('/removeSong', function(req, res) {
     songs_db.remove({ _id: req.body.id }, {}, function (err, numRemoved)  {
       if(err) {
         console.log("remove error: ");
