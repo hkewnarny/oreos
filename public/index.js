@@ -21,11 +21,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
       };
 
       $scope.model.availablePlaylist = [{
-          playlistName: 'playlistTitle1'
+          playlistName: 'Justin Timberlake'
       }, {
-          playlistName: 'playListTitle2'
+          playlistName: 'Taylor Swift'
       }, {
-          playlistName: 'playlistTitle3'
+          playlistName: 'Bruno Mars'
       }];
 
 
