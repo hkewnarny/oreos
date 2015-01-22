@@ -3,48 +3,38 @@
            class="form-control row" placeholder="Text input">
            <!--typeahead="entry.title for entry in model.playList | filter:model.search">-->
 
-    <div class="playlist_container">
-        <div class="row entry" data-ng-repeat="entry in model.youtube.stream.items" data-ng-if="entry.id.kind == 'youtube#video'">
-            <div>
-                <div class="thumbnail right-caption span4">
-                    <img ng-src="{{entry.snippet.thumbnails.medium.url}}" alt="">
-                    <div class="caption">
-                        <h5>{{entry.snippet.channelTitle}}</h5>
-                        <p>{{entry.snippet.description}}</p>
-                        <p>{{entry.id.videoId}}</p>
-                        <p><a class="btn btn-primary" role="button" ng-click="playFromPlaylist(entry.id.videoId)">Add to Playlist</a></p>
+    <div class="row">
+        <div class="playlist_container col-md-8">
+            <div class="entry" data-ng-repeat="entry in model.youtube.stream.items" data-ng-if="entry.id.kind == 'youtube#video'">
+                <div>
+                    <div class="thumbnail right-caption span4">
+                        <img ng-src="{{entry.snippet.thumbnails.medium.url}}" alt="">
+                        <div class="caption">
+                            <h5>{{entry.snippet.channelTitle}}</h5>
+                            <p>{{entry.snippet.description}}</p>
+                            <p>{{entry.id.videoId}}</p>
+                            <p><a class="btn btn-primary" role="button" ng-click="playFromPlaylist(entry.id.videoId)">Add to Playlist</a></p>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row playlist_container_v2 col-md-4">
+            <div class="row entry" data-ng-repeat="songEntry in model.playList">
+                <div>
+                    <span>{{songEntry.title}}</span>
+                    -
+                    <span>{{songEntry.url}}</span>
+                    -
+                    <span>{{songEntry.videoId}}</span>
                 </div>
             </div>
         </div>
     </div>
 
-
-      <!-- <div class="row">
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail row">
-            <img class="thumbnail_image" src="http://placehold.it/300x150" alt="...">
-            <div class="thumbnail_caption caption">
-              <h3>Artist - Title</h3>
-              <p>Description</p>
-              <p>www.youtube.com</p>
-              <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="thumbnail right-caption span4">
-        <img src="http://placehold.it/120x160" alt="">
-        <div class="caption">
-          <h5>Thumbnail label</h5>
-          <p>Cras justo odio, dapibus ac facilisis in, egestas eget. Eget metus</p>
-          <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
-        </div>
-      </div> -->
-
     
-    <div class="form-control">
+    <div class=" row form-control">
       <p>
         <a class="btn btn-primary" role="button" ng-click="sendAudioCommand('seekTo', 0)">Start</a>
         <a class="btn btn-primary" role="button" ng-click="sendAudioCommand('playVideo')">Play</a>
