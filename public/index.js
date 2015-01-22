@@ -20,14 +20,53 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
           playlist: 'playlistTitle1'
       };
 
-      $scope.model.availablePlaylist = [{
-          playlistName: 'Justin Timberlake'
-      }, {
-          playlistName: 'Taylor Swift'
-      }, {
-          playlistName: 'Bruno Mars'
-      }];
+      $scope.model.availablePlaylist = [];
 
+//        [{
+//          playlistName: 'Justin Timberlake'
+//      }, {
+//          playlistName: 'Taylor Swift'
+//      }, {
+//          playlistName: 'Bruno Mars'
+//      }];
+
+
+        PlaylistService.findAllPlayLists().then(function(playlists) {
+            $scope.model.availablePlaylist = playlists;
+
+            console.log('findAllPlayLists');
+            console.log(playlists);
+        });
+
+        $scope.newPlaylist = '';
+
+        $scope.addPlaylist = function() {
+            console.log('addPlaylist');
+            console.log($scope.newPlaylist);
+
+            PlaylistService.addToPlaylist({name: $scope.newPlaylist}).then(function() {
+                PlaylistService.findAllPlayLists().then(function(playlists) {
+                    $scope.model.availablePlaylist = playlists;
+                    console.log('findAllPlayLists');
+                    console.log(playlists);
+                });
+            });
+
+
+            //addToPlaylist
+        };
+//        $scope.deletePlaylist = function(id) {
+//            //removePlayList
+//            console.log('deletePlaylist');
+//            console.log(id);
+//
+//            PlaylistService.removePlayList($scope.newPlaylist).then(function() {
+//                PlaylistService.findAllPlayLists().then(function(playlists) {
+//                    console.log('findAllPlayLists');
+//                    console.log(playlists);
+//                });
+//            });
+//        };
 
       $scope.selectPlaylist = function(playlist) {
           $scope.model.selectedPlaylist = playlist;
@@ -66,7 +105,7 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
 
         PlaylistService.findAllSongs().then(function(videos){
             $scope.model.playList = videos;
-            $scope.selectPlaylist($scope.model.availablePlaylist[0].playlistName);
+            $scope.selectPlaylist($scope.model.availablePlaylist[0].name);
         }, function(error) {
             console.log('error');
             console.log(error);
@@ -269,7 +308,7 @@ app.service('PlaylistService', function($q, $http) {
         });
       return defer.promise;
     },
-    addToPlaylist: function(song) {
+    addToPlaylist: function(playList) {
       var defer = $q.defer();
       $http.post("/playLists", playList).
         success(function(data) {

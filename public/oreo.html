@@ -43,13 +43,19 @@
         <div class="row select_playlist_container col-md-4">
             <div class="row playlist_entry" data-ng-repeat="playlist in model.availablePlaylist">
                 <div>
-                    <span ng-click="selectPlaylist(playlist.playlistName)"
-                          ng-class="{selected_playlist: model.selectedPlaylist == playlist.playlistName}">
-                        {{playlist.playlistName}}
+                    <span ng-click="selectPlaylist(playlist.name)"
+                          ng-class="{selected_playlist: model.selectedPlaylist == playlist.name}">
+                        {{playlist.name}}
                     </span>
                     <br><br>
                 </div>
             </div>
+
+
+            <input type="text" data-ng-model="newPlaylist"
+                   class="form-control row" placeholder="Playlist input">
+            <a class="btn btn-primary" role="button" ng-click="addPlaylist(songEntry.videoId)">Add Playist</a>
+            <!--<a class="btn btn-primary" role="button" ng-click="deletePlaylist(songEntry._id)">Delete Playlist</a>-->
         </div>
     </div>
 
