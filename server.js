@@ -2,6 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     multer = require('multer');
 
+var numUsers = 0;
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
@@ -39,24 +40,15 @@ io.on('connection', function (socket) {
 	    io.emit('selectSong', data);
   	});
 
-  	socket.on('startSong', function (data) {
-	    // Tell the client to execute 'startSong'
-	    io.emit('startSong', data);
-  	});
-
-
   	socket.on('updatePlaylist', function (data) {
-	    // Tell the client to execute 'updatePlaylist'
+	    // Tell the client to execute 'selectSong'
 	    io.emit('updatePlaylist');
-  	});
-
-  	socket.on('updateListOfPlaylists', function (data) {
-	    // Tell the client to execute 'updateListOfPlaylists'
-	    io.emit('updateListOfPlaylists');
   	});
 
   	socket.on('userJoin', function(data) {
   		console.log(socket.id + " JOINED!");
+      numUsers++;
+      console.log("users online: " + numUsers);
   		users[socket.id] = 1;
 		console.log("current users: " + JSON.stringify(users));
   		// if (playlistsToUsers[data].length != 0) {
