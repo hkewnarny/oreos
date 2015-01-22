@@ -1,0 +1,32 @@
+/* Styles go here */
+/* .thumbnail_image {
+  float: left;
+}
+
+.thumbnail_caption {
+  float: right;
+} */
+
+.thumbnail.right-caption > img {
+    float: left;
+    /* margin-right: 9px; */
+}
+
+.thumbnail.right-caption {
+    /* float: right; */
+}
+
+.thumbnail.right-caption > .caption {
+    /* padding: 4px; */
+}
+
+.playlist_container {
+    height: 500px;
+    overflow: scroll;
+    width: 55%;
+}
+
+.entry {
+    width: 95%;
+    padding-left: 20px;
+}
