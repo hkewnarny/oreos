@@ -3,7 +3,7 @@ var app = angular.module('oerosApp', ['ui.bootstrap']);
 app.controller('MainCtrl', function($scope) {
 });
 
-app.directive('oreoDirective', function($compile, YouTubeService) {
+app.directive('oreoDirective', function($compile, $sce, YouTubeService) {
   return {
     restrict: 'A', //attribute or element
     scope: {
@@ -47,12 +47,34 @@ app.directive('oreoDirective', function($compile, YouTubeService) {
           stream: {}
       };
 
+      $scope.videoUrl = '';
+
+      $scope.videoId = 'e-ORhEE9VVg';
+
+      $scope.$watch('videoId', function(id) {
+        $scope.videoUrl = $sce.trustAsResourceUrl('http://www.youtube.com/embed/'+ id + '?autoplay=1&enablejsapi=1');
+      });
+
       $scope.$watch('model.search', function(searchTerm) {
           YouTubeService.search(searchTerm).then(function(response) {
               $scope.model.youtube.stream = response;
               console.log($scope.model.youtube.stream);
         });
       });
+
+      $scope.sendAudioCommand = function(func, args) {
+        $('#youtube-player')[0].contentWindow.postMessage(JSON.stringify({
+          'event': 'command',
+           'func': func,
+          'args': args || []
+        }), "*");
+      };
+
+      $scope.playFromPlaylist = function(videoId) {
+        console.log('playing video');
+        $scope.videoId = videoId;
+      };
+
     },
     controller: function($scope, $element, $attrs) {
     }

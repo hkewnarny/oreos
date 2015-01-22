@@ -12,7 +12,7 @@
                         <h5>{{entry.snippet.channelTitle}}</h5>
                         <p>{{entry.snippet.description}}</p>
                         <p>{{entry.id.videoId}}</p>
-                        <p><a href="#" class="btn btn-primary" role="button">Add to Playlist</a></p>
+                        <p><a class="btn btn-primary" role="button" ng-click="playFromPlaylist(entry.id.videoId)">Add to Playlist</a></p>
                     </div>
                 </div>
             </div>
@@ -46,9 +46,13 @@
     
     <div class="form-control">
       <p>
-        <a href="#" class="btn btn-primary" role="button">Start</a>
-        <a href="#" class="btn btn-default" role="button">Pause</a>
-        <a href="#" class="btn btn-primary" role="button">Skip</a>
+        <a class="btn btn-primary" role="button" ng-click="sendAudioCommand('seekTo', 0)">Start</a>
+        <a class="btn btn-primary" role="button" ng-click="sendAudioCommand('playVideo')">Play</a>
+        <a class="btn btn-default" role="button" ng-click="sendAudioCommand('pauseVideo')">Pause</a>
+        <!-- <a class="btn btn-primary" role="button" ng-click="sendAudioCommand('playVideo')">Skip</a>  -->
       </p>
     </div>
+
+  <iframe id="youtube-player" type="text/html" width="640" height="385" ng-src="{{videoUrl}}" allowfullscreen frameborder="0" >
+
 </div>
