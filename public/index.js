@@ -81,10 +81,10 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
 
         switch(func) {
           case 'playVideo':
-            socket.emit('playSong', "foo");
+            socket.emit('playSong', $scope.model.selectedPlaylist);
             break;
           case 'pauseVideo':
-            socket.emit('pauseSong', "foo");
+            socket.emit('pauseSong', $scope.model.selectedPlaylist);
             break;
         }
 
@@ -160,11 +160,15 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
 
       // Client socket listeners
       socket.on('pauseSong', function(data) {
-        doAudioCommand('pauseVideo');
+        if (data == $scope.model.selectedPlaylist) {
+          doAudioCommand('pauseVideo');
+        }
       });
 
       socket.on('playSong', function(data) {
-        doAudioCommand('playVideo');
+        if (data == $scope.model.selectedPlaylist) {
+          doAudioCommand('playVideo');
+        }
       });
 
       socket.on('selectSong', function(data) {

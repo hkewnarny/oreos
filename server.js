@@ -26,18 +26,12 @@ var users = {};
 io.on('connection', function (socket) {
 	socket.on('pauseSong', function (data) {
 	    // Tell the client to execute 'pauseSong'
-	    io.emit('pauseSong', {
-	      username: socket.username,
-	      message: data
-    	});
+	    io.emit('pauseSong', data);
   	});
 
   	socket.on('playSong', function (data) {
 	    // Tell the client to execute 'playSong'
-	    io.emit('playSong', {
-	      username: socket.username,
-	      message: data
-    	});
+	    io.emit('playSong', data);
   	});
 
   	socket.on('selectSong', function (data) {
