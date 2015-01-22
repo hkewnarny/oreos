@@ -69,3 +69,7 @@
 /*.entry:hover {*/
     /*cursor: pointer;*/
 /*}*/
+
+#youtube-player {
+    display: none;
+}
