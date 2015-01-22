@@ -94,6 +94,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
             $scope.videoId = videoId;
         };
 
+        $scope.deleteSong = function(id) {
+            console.log('delete');
+            console.log(id);
+        };
+
       $scope.addToPlaylist = function(uploader, videoTitle, videoId) {
         var data = {
           title: videoTitle,

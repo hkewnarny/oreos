@@ -22,13 +22,15 @@
 
         <div class="row playlist_container_db col-md-4">
             <div class="row entry" data-ng-repeat="songEntry in model.playList | filter: model.playlistFiler">
-                <div data-ng-click="selectSong(songEntry.videoId)"
-                     data-ng-class="{selected_song: songEntry.videoId == videoId}">
+                <div data-ng-class="{selected_song: songEntry.videoId == videoId}">
                     <span>{{songEntry.uploader}}</span>
                     -
                     <span>{{songEntry.title}}</span>
                     -
                     <span>{{songEntry.videoId}}</span>
+
+                    <a class="btn btn-primary" role="button" ng-click="selectSong(songEntry.videoId)">Play</a>
+                    <a class="btn btn-primary" role="button" ng-click="deleteSong(songEntry._id)">Delete</a>
                     <!----->
                     <!--<span>{{songEntry.createdAt}}</span>-->
                     <br><br>
