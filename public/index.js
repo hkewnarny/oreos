@@ -92,6 +92,11 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
 
         $scope.selectSong = function(videoId) {
             $scope.videoId = videoId;
+
+            socket.emit('selectSong', {
+              playlist: $scope.model.selectedPlaylist,
+              videoId: videoId
+            });
         };
 
         $scope.deleteSong = function(id) {
@@ -158,6 +163,28 @@ app.directive('oreoDirective', function($compile, $sce, $filter, YouTubeService,
         doAudioCommand('playVideo');
       });
 
+      socket.on('selectSong', function(data) {
+        $scope.$apply(function() {
+          if ($scope.model.selectedPlaylist == data['playlist']) {
+            $scope.videoId = data['videoId'];
+          }
+        });
+      });
+
+      socket.on('connect', function() {
+        socket.emit('userJoin', "mainPlaylist");
+      });
+
+      socket.on('disconnect', function() {
+        socket.emit('userLeave');
+      });
+
+      socket.on('updateCurrentSong', function(data) {
+        socket.emit('updateCurrentSong', {
+          videoId: videoId,
+          playlist: data
+        });
+      });
     },
     controller: function($scope, $element, $attrs) {
     }

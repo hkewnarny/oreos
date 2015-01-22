@@ -21,6 +21,8 @@ server.listen(port, function(){
 	console.log("Express is running on port %d", port);
 });
 
+var users = {};
+
 io.on('connection', function (socket) {
 	socket.on('pauseSong', function (data) {
 	    // Tell the client to execute 'pauseSong'
@@ -36,5 +38,38 @@ io.on('connection', function (socket) {
 	      username: socket.username,
 	      message: data
     	});
+  	});
+
+  	socket.on('selectSong', function (data) {
+	    // Tell the client to execute 'selectSong'
+	    io.emit('selectSong', data);
+  	});
+
+  	socket.on('userJoin', function(data) {
+  		console.log(socket.id + " JOINED!");
+  		users[socket.id] = 1;
+		console.log("current users: " + JSON.stringify(users));
+  		// if (playlistsToUsers[data].length != 0) {
+  		// 	//Get first info from first user on playlist
+  		// 	var existingUser = playlistsToUsers[data][0];
+  		// 	io.sockets.socket(existingUser).emit('updateCurrentSong', data);
+
+  		// 	io.emit('syncToSong', {
+  		// 		playlist: data,
+  		// 		song: playlistsToSongs[data]
+  		// 	});
+  		// } else {
+  		// 	playlistsToUsers[data].push(socket.id);
+  		// }
+  	});
+
+  	socket.on('updateCurrentSong', function(data) {
+
+  	});
+
+  	socket.on('userLeave', function(data) {
+  		console.log(socket.id + " LEFT!");
+  		delete users[socket.id];
+		console.log("current users: " + JSON.stringify(users));
   	});
 });
