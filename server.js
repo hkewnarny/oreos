@@ -45,10 +45,13 @@ io.on('connection', function (socket) {
 	    io.emit('updatePlaylist');
   	});
 
+    socket.on('updateListOfPlaylists', function (data) {
+      // Tell the client to execute 'updateListOfPlaylists'
+      io.emit('updateListOfPlaylists');
+    });
+
   	socket.on('userJoin', function(data) {
   		console.log(socket.id + " JOINED!");
-      numUsers++;
-      console.log("users online: " + numUsers);
   		users[socket.id] = 1;
 		console.log("current users: " + JSON.stringify(users));
   		// if (playlistsToUsers[data].length != 0) {
