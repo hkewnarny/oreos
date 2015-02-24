@@ -1,2 +1,2 @@
 # oreos
-describe wat this is
+Synchronized music sharing and listening
